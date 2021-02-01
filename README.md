@@ -8,7 +8,7 @@
 |    IIT2019020  |   HRITIK SHARMA | 
 |    IIT2019018  |   SHREYANSH PATIDAR |
 
-**Group No-**"7"
+**Group No-**"6"
 
 **Faculty Name-**"DR. MOHAMMED JAVED"
 
