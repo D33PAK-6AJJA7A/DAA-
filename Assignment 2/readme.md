@@ -1,4 +1,4 @@
-# Assignment 1
+# Assignment 2
 
 
 **Team Members**
@@ -22,7 +22,7 @@ Create a matrix of size 50 x 50 of numbers ranging from 0 to 9 and find the leng
 ## How to use code
 ```
 #Download project
-git clone https://github.com/Athe1stB/DAA_IIT2019018-20 
+git clone https://github.com/Athe1stB/DAA-
 ```
 Project Initialize
 ```
