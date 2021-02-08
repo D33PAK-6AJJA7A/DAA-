@@ -78,4 +78,4 @@ Sorting is the process of arranging the elements of a set in a fashionable order
 
 ### References
 
-https://en.wikipedia.org/wiki/sequences
+1. https://en.wikipedia.org/wiki/sequences
