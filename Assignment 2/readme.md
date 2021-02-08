@@ -71,11 +71,11 @@ Sorting is the process of arranging the elements of a set in a fashionable order
 **Time Complexity**
 |   Approach  |   Time complexity   |
 |   --------------  |   ----   |
-|    1  |   O(n*n*n + n*n) |
-|    2  |   O(n*(n*n*log(n)) ) |
+|    1  |   O(n^3 + n^2) |
+|    2  |   O(n*(n^2* log(n)) ) |
 
 ---
 
 ### References
 
-https://en.wikipedia.org/wiki/sequences_(set_theory)
+https://en.wikipedia.org/wiki/sequences
