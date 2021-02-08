@@ -1,0 +1,63 @@
+#include<stdio.h>
+
+int maximum(int b[],int n){
+	int max = b[0],j=1;
+
+	while(j<n){
+		if(b[j]>max)max=b[j];
+		j++;
+	}
+	return max;
+}
+
+int search(int arr[],int low, int high, int key)
+{
+    int ans = -1;
+ 
+    while (low <= high) {
+        int mid = low + (high - low + 1) / 2;
+ 
+        if (arr[mid] < key)   low = mid + 1;
+        
+        else if (arr[mid] > key) {
+ 
+            ans = mid;
+            high = mid - 1;
+        }
+        else if (arr[mid] == key) 
+                   low = mid +1;
+    }
+ 
+    return ans;
+}
+int main(){
+	int n;
+	scanf("%d",&n);
+    int a[n][n],ans_arr[n],row_wise_max[n],pntr,index,soln;
+   
+    /*srand(time(0));*/
+	for(int i=0;i<n;i++){
+	   for(int j=0;j<n;j++)a[i][j] = rand()%10;
+	}
+
+	for(int i=0;i<n;i++){
+
+		for(int j=0;j<n;j++) ans_arr[j]=-1;
+		ans_arr[0]=a[i][n-1],pntr=0;
+
+		for(int j=n-2;j>=0;j--){
+
+			  if(a[i][j] < ans_arr[0])ans_arr[0]=a[i][j];
+              else if(a[i][j] >= ans_arr[pntr]) ans_arr[++pntr] = a[i][j];
+			  else {
+				  index = search(ans_arr,0,pntr,a[i][j]);
+                  ans_arr[index] = a[i][j];
+			  }
+		}
+		row_wise_max[i] = pntr+1;
+	 	/*printf("%d ",row_wise_max[i]);*/
+		
+	}   
+   soln = maximum(row_wise_max,n);
+	printf("%d",soln);
+}
