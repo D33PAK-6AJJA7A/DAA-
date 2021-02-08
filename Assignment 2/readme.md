@@ -72,7 +72,7 @@ Sorting is the process of arranging the elements of a set in a fashionable order
 |   Approach  |   Time complexity   |
 |   --------------  |   ----   |
 |    1  |   O(n^3 + n^2) |
-|    2  |   O(n*(n^2* log(n)) ) |
+|    2  |   O(n* (n*log(n)) ) |
 
 ---
 
