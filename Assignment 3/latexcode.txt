@@ -1,0 +1,260 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{textcomp}
+\usepackage{epsfig}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{hyperref}
+\pgfplotsset{width=10cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+
+
+
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage[ruled,vlined]{algorithm2e}
+
+\tikzexternalize 
+\begin{document}
+
+\title{Implement Merge sort without using recursion\\
+\text{\Large{DAA ASSIGNMENT-3 , GROUP 6}}
+}
+\author{\IEEEauthorblockN{Shreyansh Patidar}
+\IEEEauthorblockA{ \text{IIT2019018}}
+\and
+\IEEEauthorblockN{Biswajeet Das}
+\IEEEauthorblockA{ \text{IIT2019019}}
+\and
+\IEEEauthorblockN{Hritik Sharma}
+\IEEEauthorblockA{ \text{IIT2019020}}
+}
+
+\maketitle{\textbf{\textit{Abstract: In this paper we have devised an algorithm which is an implementation of Merge sort without using recursion..\\This report further contains -\\
+II. Algorithm Design\\
+III. Algorithm Analysis\\
+IV. Result\\
+V. Conclusion }}}
+
+\section{INTRODUCTION}
+Let’s first formally define what a process of sorting is.
+\\Sorting refers to arranging data in a particular format. Sorting algorithm specifies the way to arrange data in a particular order. Most common orders are in numerical or lexicographical order. \href{https://en.wikipedia.org/wiki/Sorting}{[1]}
+\\  For eg ,if the array \(Arr\) [6,4,8,3,1] is  given , after sorting in ascending order, array \(Arr\) will be [1,3,4,6,8].
+\\ Now we define the Merge operation for two sorted arrays
+\\ Merge algorithms are a family of algorithms that take multiple sorted lists as input and produce a single list as output, containing all the elements of the inputs lists in sorted order.\href{https://www.sciencedirect.com/topics/computer-science/merge-operation}{[2]} These algorithms are used as subroutines in various sorting algorithms, most famous of which is merge sort.
+\\ For eg , We have 2 sorted arrays \(Arr1\) [2,5,7,9] and \(Arr2\)  [1,3,5,6,10].So , after applying merge operation on these two arrays , the output merged array will be [1,2,3,5,5,6,7,9,10].
+
+
+\section{ALGORITHM DESIGN}
+\subsection{\textit{Algorithm used for dividing array into smaller parts}}
+\raggedright
+This algorithm takes an array, \(Arr\) of \(n\) elements as input and keeps on dividing the array into smaller components in iterative way. And as we breakdown we also keep merging the broken arrays in the order of their sizes in power of 2 in sorted fashion. Thereby the final merge will result in overall the sorted array.  
+\subsection{\textit{Algorithm used for merging Sorted\_Components}}
+Here we describe 2 possible approaches :\\
+\textbf{ Approach 1}\\
+Keep merging 2 \(Sorted\_Components\) into 1 using the merge operation of the merge sort algorithm until we end up with 1 single \(Sorted\_Component\).
+\textit{Merge Operation for merging 2 \(Sorted\_Components\) using \(2 \ pointer\) method.} 
+First pointer \(l\) points to the current element of first array \(Arr1[l]\) and Second pointer \(r\) points to the current element of second array \(Arr2[r]\).
+\\
+\(While\) \(l\) does not point to end of first array  \(or\) \(r\) does not point to the end of second array , we have \(2\) possible cases : 
+   \begin{itemize}
+       \item If \(r\) points to the end of second array \(or\) $Arr1[l]\leq Arr2[r]$ we append \(Arr1[l]\) to \(Answer\) array and increment \(l\) by 1.
+       \item Else we append \(Arr2[r]\) to \(Answer\) array and increment \(r\) by 1.
+   \end{itemize}
+\textbf{ Approach 2}
+\\   
+\text{Naive Approach}
+\\ Here first we calculate the maximum element of both the arrays to be sorted \(maxA and maxB\). Then we find maxALL = max \(maxA , maxB\).
+\\Next, we traverse in a for loop from 1 to maxALL and check if current num  is present in A or B. If present then insert it in the merged array as many times as found.
+\begin{algorithm} 
+    \caption{Divide into smaller parts}
+    \KwIn{vector Arr of size n}
+    \KwOut {last sorted array}
+    \DontPrintSemicolon
+    \SetKwFunction{FMain}{divide}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\FMain{$Arr$,$n$}}{
+        
+       int $currSize$, $leftStart$\;
+       \For{$currSize \gets 1$ \textbf{to} $n-1$}{
+           \For{$leftStart \gets 0$ \textbf{to} $n-1$; += 2*currSize}{
+               int $mid$ = min(leftStart + currSize - 1, n-1)\;
+               int $rightEnd$ = min(leftStart + 2*currSize - 1, n-1)\;
+               merge(arr, leftStart, mid, rightEnd)\;
+           }
+       }
+    \KwRet arr\;
+        
+    }
+\end{algorithm}
+
+\begin{algorithm}
+     \caption{Merge Sorted Components}
+    \KwIn{2 arrays $Arr1$ and $Arr2$}
+    \KwOut {sorted array $Arr$}
+    \DontPrintSemicolon
+    \SetKwFunction{FMain}{MergeSortedComponents}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\FMain{$Arr1$,$Arr2$}}{
+        
+        $n1 \gets  Arr1$.size()\;
+        $n2 \gets  Arr2$.size()\;
+
+        $l \gets  0$\;
+        $r \gets  0$\;
+
+        vector $Arr$\;
+        
+        \While{$(l \neq n1$ \textit{ or } $r \neq n2)$}{
+            
+            \If{$(r = n2$ \textit{ or } $Arr1[l] \leq Arr2[r])$}{
+                $Arr.append(Arr1[l])$\;
+                $l \gets (l+1)$\;
+                
+            }
+            \Else{
+                $Arr.append(Arr2[r])$\;
+                $r\gets (r+1)$\;
+            }
+          
+        }
+    \KwRet Arr\;   
+
+}
+\end{algorithm}
+\pagebreak
+
+\begin{algorithm}
+     \caption{Merge Sorted Components}
+    \KwIn{2 arrays $Arr1$ and $Arr2$}
+    \KwOut {sorted array $Arr$}
+    \DontPrintSemicolon
+    \SetKwFunction{FMain}{MergeSortedComponents}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\FMain{$ $}}{
+        
+        int $maxA$,$maxB$,$maxALL$\;
+        int $Arr[nA+nB]$\;
+        
+        \For{$i$ \textbf{ in } $A$}{
+            $maxA$ = max($maxA$ , A[i])\;
+        }
+        \For{$i$ \textbf{ in } $B$}{
+            $maxB$ = max($maxB$ , B[i])\;
+        }
+        $maxALL$ = max($maxA$, $maxB$)\;
+        
+        \For{$i \gets 1$ \textbf{ to } $maxALL$}{
+            if(i \textbf{in} A \textit{or} i \textbf{in} B){
+                Arr.$append$(i);
+            }
+        }
+
+    \KwRet Arr\;  
+    }
+\end{algorithm}
+
+
+   
+\section{ALGORITHM ANALYSIS}
+
+\subsection{Time Complexity}
+The above described algorithm to divide the array into smaller components takes O($log(n)$) complexity in both the best and worst cases.
+\\For merging \(Sorted\_Components\) we have described 2 algorithms.
+First algorithm which merges 2 sorted arrays into 1 using 2pointer technique takes O(n) for each merge operation therefore for $k$ \(Sorted\_Components\) a total of $k-1$ merge operations would be required. So, this algorithm takes O($log(n)\ast k$) complexity where $n$ is the size of input array.\\
+In Second Algorithm using naive approach , since it is brute force and each num is accessed , the total time complexity comes out to be O($log(n) \ast maxALL \ast (nA+nB)$) where $nA$, $nB$ are the sizes of array A and array B.
+So, we can conclude that,\\
+\textbf{Approach 1:}
+\\ \textit{\textbf{$t_{avg}$} = O($n \ast log n$)}
+\\ \textit{\textbf{$t_{worst}$} = O($n \ast log n$)}
+\\ \textit{\textbf{$t_{best}$} = O($0$)}
+
+\textbf{Approach 2:}
+\\ \textit{\textbf{$t_{avg}$} = O($log(n) \ast maxALL \ast (nA+nB)$)}
+\\ \textit{\textbf{$t_{worst}$} = O(($log(n) \ast maxALL \ast (k)$))}
+\\ \textit{\textbf{$t_{best}$} = O($0$)}
+
+\subsection{Space Complexity}
+
+The space complexity of this algorithm for both the approaches are as follows:\\
+\textbf{Approach 1:}
+\\ \textit{\textbf{$sp_{avg}$} = O($n \ast log k$)}
+
+\textbf{Approach 2:}
+\\ \textit{\textbf{$sp_{avg}$} = O($((nA+nB) \ast log(k))$)}
+
+\section{EXPERIMENTAL STUDY}
+Here we will see the graphs of each algorithm used.
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Size Of Input Array [n]},
+    ylabel={Time in ms [t]},
+    xmin=0, xmax=100,
+    ymin=0, ymax=6,
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    ytick={0,1,2,3,4,5,6}
+]
+
+\addplot[
+    color=red,
+    mark=dot,
+    ]
+    coordinates {
+    (0,0.001)(10,4)(18,7.2)(24,9.5)(30,12.2)(40,15.68)(57,22.8)(60,23.9)(70,27.7)(82,32.8)(98,39.3)
+    };
+    \legend{O($n\ast logk$) algorithm}
+  \end{axis}
+\end{tikzpicture}
+\begin{center}
+\textbf{Fig 1: Time complexity for naive algorithm. Approach 2}
+\end{center}
+\setlength{\parskip}{3em}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Size Of Input Array [n]},
+    ylabel={Time in ms [t]},
+    xmin=0, xmax=100,
+    ymin=0, ymax=6,
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    ytick={0,1,2,3,4,5,6}
+]
+
+\addplot[
+    color=red,
+    mark=dot,
+    ]
+    coordinates {
+    (0,0.0001)(10,0.4)(18,0.72)(24,0.95)(30,1.22)(40,1.568)(57,2.28)(60,2.39)(70,2.77)(82,3.28)(98,3.93)
+    };
+    \legend{O($n\ast logk$) algorithm}
+  \end{axis}
+\end{tikzpicture}
+
+\begin{center}
+\textbf{Fig 2: Time complexity for best algorithm. Approach 1}
+\end{center}
+
+\section{CONCLUSION}
+Finding sorted components takes same time and space in both the proposed algorithms. But for merging those sorted components, the later approach while using set data structure comes optimal with time complexity O($n \ast logk$), where n is size of input set/array and k is number of sorted components. So, in worst case too, time complexity would be O($n \ast logn$).
+\section{REFERENCES}
+\begin{enumerate}
+    \item \url{https://en.wikipedia.org/wiki/Sorting}
+    \item \url{https://www.sciencedirect.com/topics/computer-science/merge-operation}
+\end{enumerate}
+
+\end{document}
