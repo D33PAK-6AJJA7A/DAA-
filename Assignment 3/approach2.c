@@ -1,8 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max(int x, int y) { return (x>y)? x :y; }
-int min(int x, int y) { return (x<y)? x :y; }
+int max(int x, int y) { 
+    return (x>y)? x :y; 
+}
+int min(int x, int y) { 
+    return (x<y) ? x : y; 
+}
 
 void merge(int arr[], int l, int m, int r) {
     int maxA,maxB,maxAll,k=l;
